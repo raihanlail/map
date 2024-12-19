@@ -1,6 +1,7 @@
 <div class="content" style="margin: 10px;"> 
       <div style="margin: auto; padding-left: 5em; padding-top:2em;">
           <h1 style="font-family: 'Arial', sans-serif; color: #2c3e50; font-size: 2.5em; font-weight: 600; text-shadow: 2px 2px 4px rgba(0,0,0,0.1); border-bottom: 3px solid #3498db; padding-bottom: 10px; display: inline-block;">Rumah Sakit di Bekasi Utara</h1>
+          <p style="margin-bottom: -1em;">click the marker to see hospital details</p>
       </div>      <div id="map" class="map"></div> 
 </div> 
 
@@ -23,14 +24,12 @@
                               <img src="${feature.properties.image}" style="width: 80%; height:100px; margin-bottom: 8px;">
                           </div>
                           <div class="button-container">
-                          <button class="btn btn-primary button" style="margin-right: 5px;">
-                          <a href="${feature.properties.web}" style="text-decoration: none;">Website</a>
-                          
-                          </button>
-                          <button class="btn btn-primary button" style="margin-right: 5px;">
-                          <a href="${feature.properties.route}" target="__blank">Route</a>
-                          </button>
-                          
+                                                <a href="${feature.properties.web}" style="text-decoration: none;">
+                                                    <button class="btn button" style="margin-right: 5px;">Website</button>
+                                                </a>
+                                                <a href="${feature.properties.route}" target="__blank">
+                                                    <button class="btn button" style="margin-right: 5px;">Route</button>
+                                                </a>
                           </div>
                       </div>
                   `, {
@@ -43,7 +42,7 @@
         
           var map = L.map('map', {
               center: [-6.1951102, 107.0118729], 
-              zoom: 11, 
+              zoom: 12, 
               zoomControl: false,
               layers: [hospital],
               fadeAnimation: true,
@@ -176,8 +175,8 @@
             align-items: center;
             justify-content: center;
             width: 8em;
-            color: white;
             background-color: white;
+           
             border: 1px solid #ccc;
             border-color: blue;
             border-radius: 6px;
@@ -189,9 +188,10 @@
       }
 
       .button:hover {
-            background-color: #34495e;
+            background-color: blue;
             transform: translateY(-2px);
             box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            color:white;
       }      .map {
           width: 90%;
           margin: auto;

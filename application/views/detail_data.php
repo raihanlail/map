@@ -3,7 +3,12 @@
           <h1 style="font-family: 'Arial', sans-serif; color: #2c3e50; font-size: 2.5em; font-weight: 600; text-shadow: 2px 2px 4px rgba(0,0,0,0.1); border-bottom: 3px solid #3498db; padding-bottom: 10px; display: inline-block;">Data Details</h1>
       </div>      <div id="map" class="map"></div> 
 
-      <div class="data" style="margin: 20px;">
+      <div class="data main-content" >
+        <div class="download-section">
+            <a href="<?=base_url()?>assets/hospital.geojson" download="hospital.geojson">
+                <button class="btn btn-success">Download GeoJSON</button>
+            </a>
+        </div>
         <table id="data-container" class="table table-bordered table-striped">
 
         </table>
@@ -63,6 +68,18 @@
 
     a{
         text-decoration: none;
+    }
+
+    .download-section {
+        margin-bottom: 1em;
+    }
+
+    .main-content {
+        margin: 20px; padding-left:3.8em;
+
+        @media screen and (max-width: 768px) {
+            padding-left: 1em;
+        }
     }
 
 </style>
