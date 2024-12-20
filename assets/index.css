@@ -1,21 +1,43 @@
-/* width */
-::-webkit-scrollbar {
-    width: 9px;
-    background: transparent;
+.jumbotron{
+    display:flex;
+    flex-direction:row;
+    height:100vh;
+    background-color: #0275d8;
+    color:white;
 }
- 
-/* Track */
-::-webkit-scrollbar-track {
-    background: white;
+
+.section-1{
+    display:flex;
+    flex-direction: column;
+    width: 50%;
+    margin-top: 4em;
+    margin-left:4em;
+    gap:2em;
 }
- 
-/* Handle */
-::-webkit-scrollbar-thumb {
-    background: #cbd0d8;
-    border-radius: 5px;
+
+.section-2{
+    width: 50%;
+    margin-top: 4em;
+    margin-left:4em;
 }
- 
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-    background: #0d6efd;
+
+.button{
+    height:60px;
+}
+
+@media only screen and (max-width: 768px) {
+    .section-1{
+        width:90%;
+        margin-top: 2em;
+    margin-left:2em;
+    }
+    .section-2{
+        width:90%;
+        margin-top: 2em;
+    margin-left:2em;
+    }
+    .jumbotron{
+        display:flex;
+        flex-direction:column;
+    }
 }

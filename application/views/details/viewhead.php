@@ -13,6 +13,8 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="<?=base_url()?>assets/template/dist/css/adminlte.min.css">
   <link rel="stylesheet" href="<?=base_url()?>assets/index.css">
+  <link rel="stylesheet" href="<?=base_url()?>assets/animate.min.css">
+  <link rel="stylesheet" href="<?=base_url()?>assets/owl.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
   
@@ -39,5 +41,8 @@
   <script src="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locate-control/v0.43.0/L.Control.Locate.min.js"></script>
   <script src="<?=base_url()?>assets/L.Control.ZoomBar.js"></script>
   <script type="text/javascript" src="<?=base_url()?>assets/Leaflet.Coordinates-0.1.5.min.js"></script>
+  <script src="<?=base_url()?>assets/script.js"></script>
+  <script src="<?=base_url()?>assets/owl.js"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <link rel="stylesheet" href="<?=base_url()?>assets/Leaflet.Coordinates-0.1.5.css"/>
 </head>

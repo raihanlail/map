@@ -5,7 +5,7 @@ class Home extends CI_Controller {
    { 
        $data = array( 
            'judul' => 'WebGIS Trainning', 
-           'content' => 'peta_leaflet'
+           'content' => 'home_content'
        ); 
        $this->load->view('layout/viewunion', $data, FALSE); 
    } 

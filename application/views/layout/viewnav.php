@@ -1,6 +1,9 @@
 <div class="collapse navbar-collapse order-3" id="navbarCollapse">
         <!-- Left navbar links -->
         <ul class="navbar-nav">
+        <li class="nav-item">
+            <a href="<?=base_url()?>map" class="nav-link text-white hover:text-gray-200 transition-colors duration-300 font-medium px-4 py-2 rounded-md hover:bg-opacity-20 hover:bg-white">View Map</a>
+          </li>
           <li class="nav-item">
             <a href="<?=base_url()?>details" class="nav-link text-white hover:text-gray-200 transition-colors duration-300 font-medium px-4 py-2 rounded-md hover:bg-opacity-20 hover:bg-white">View Data</a>
           </li>

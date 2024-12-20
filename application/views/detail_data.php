@@ -1,18 +1,21 @@
-<div class="content" style="margin: 10px;"> 
-      <div style="margin: auto; padding-left: 5em; padding-top:2em;">
-          <h1 style="font-family: 'Arial', sans-serif; color: #2c3e50; font-size: 2.5em; font-weight: 600; text-shadow: 2px 2px 4px rgba(0,0,0,0.1); border-bottom: 3px solid #3498db; padding-bottom: 10px; display: inline-block;">Data Details</h1>
-      </div>      <div id="map" class="map"></div> 
+<div class="content" style="margin: 20px; background-color: #f8f9fa; border-radius: 15px; box-shadow: 0 0 20px rgba(0,0,0,0.1);"> 
+    <div class="header-section" style="background-color: #0275d8; padding: 2em; border-radius: 15px 15px 0 0;">
+        <h1 style="font-family: 'Arial', sans-serif; color: white; font-size: 2.5em; font-weight: 600; text-shadow: 2px 2px 4px rgba(0,0,0,0.2); text-align: center;">Data Details</h1>
+    </div>
+    
+    <div id="map" class="map"></div> 
 
-      <div class="data main-content" >
+    <div class="data main-content">
         <div class="download-section">
             <a href="<?=base_url()?>assets/hospital.geojson" download="hospital.geojson">
-                <button class="btn btn-success">Download GeoJSON</button>
+                <button class="btn btn-success btn-lg"><i class="fas fa-download"></i> Download GeoJSON</button>
             </a>
         </div>
-        <table id="data-container" class="table table-bordered table-striped">
-
-        </table>
-      </div>
+        <div class="table-responsive">
+            <table id="data-container" class="table table-hover table-bordered">
+            </table>
+        </div>
+    </div>
 </div> 
 
 <script>
@@ -21,65 +24,104 @@
     .then(data => {
         const container = document.getElementById("data-container");
         const table = document.createElement("table");
-
-        table.innerHTML = `
-        <tr>
-        <th>Nama</th>
-        <th>Alamat</th>
-        <th>Latitude</th>
-        <th>Longitude</th>
-        <th>Gambar</th>
-        <th>Website</th>
-        <th>Rute</th>
-
-        </tr>
         
+        table.innerHTML = `
+        <thead class="table-primary">
+            <tr>
+                <th>Nama</th>
+                <th>Alamat</th>
+                <th>Latitude</th>
+                <th>Longitude</th>
+                <th>Gambar</th>
+                <th>Website</th>
+                <th>Rute</th>
+            </tr>
+        </thead>
         `;
+        
         data.features.forEach(feature => {
             const row = document.createElement("tr");
             row.innerHTML = `
-                <td>${feature.properties.name}</td>
-                <td>${feature.properties.address}</td>
-                <td>${feature.geometry.coordinates[1]}</td>
-                <td>${feature.geometry.coordinates[0]}</td>
-                <td><img src="${feature.properties.image}"> </td>
-                <td><a href="${feature.properties.web}"><button class="btn btn-primary">website</button></a></td>
-                <td><a href="${feature.properties.route}"><button class="btn btn-warning">Rute</button></a></td>
-                `;
-                table.appendChild(row);
+                <td class="align-middle">${feature.properties.name}</td>
+                <td class="align-middle">${feature.properties.address}</td>
+                <td class="align-middle">${feature.geometry.coordinates[1]}</td>
+                <td class="align-middle">${feature.geometry.coordinates[0]}</td>
+                <td class="align-middle"><img src="${feature.properties.image}" class="img-thumbnail"> </td>
+                <td class="align-middle"><a href="${feature.properties.web}" class="btn btn-primary btn-sm"><i class="fas fa-globe"></i> Website</a></td>
+                <td class="align-middle"><a href="${feature.properties.route}" class="btn btn-warning btn-sm"><i class="fas fa-route"></i> Rute</a></td>
+            `;
+            table.appendChild(row);
         });
         container.appendChild(table);
-
-        
     })
 </script>
 
 <style>
-    .data{
+    .data {
         display: flex;
         flex-direction: column;
         gap: 2em;
-        margin:20px
-    }
-    img{
-        width: 150px;
-        height: 80px;
+        margin: 20px;
     }
 
-    a{
+    img {
+        width: 150px;
+        height: 80px;
+        object-fit: cover;
+        border-radius: 8px;
+        transition: transform 0.3s ease;
+    }
+
+    img:hover {
+        transform: scale(1.1);
+    }
+
+    a {
         text-decoration: none;
     }
 
     .download-section {
-        margin-bottom: 1em;
+        margin: 2em 0;
+        text-align: center;
     }
 
     .main-content {
-        margin: 20px; padding-left:3.8em;
-
-        @media screen and (max-width: 768px) {
-            padding-left: 1em;
-        }
+        margin: 20px;
+        padding: 2em;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.05);
     }
 
+    .table {
+        background-color: white;
+    }
+
+    .table th {
+        background-color: #0275d8;
+        color: white;
+        font-weight: 600;
+    }
+
+    .table td {
+        vertical-align: middle;
+    }
+
+    .btn {
+        transition: transform 0.2s ease;
+    }
+
+    .btn:hover {
+        transform: translateY(-2px);
+    }
+
+    @media screen and (max-width: 768px) {
+        .main-content {
+            padding: 1em;
+        }
+        
+        .table-responsive {
+            overflow-x: auto;
+        }
+    }
 </style>

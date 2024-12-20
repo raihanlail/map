@@ -1,11 +1,23 @@
-<div class="content" style="margin: 10px;"> 
-      <div style="margin: auto; padding-left: 5em; padding-top:2em;">
-          <h1 style="font-family: 'Arial', sans-serif; color: #2c3e50; font-size: 2.5em; font-weight: 600; text-shadow: 2px 2px 4px rgba(0,0,0,0.1); border-bottom: 3px solid #3498db; padding-bottom: 10px; display: inline-block;">Rumah Sakit di Bekasi Utara</h1>
-          <p style="margin-bottom: -1em;">click the marker to see hospital details</p>
-      </div>      <div id="map" class="map"></div> 
-</div> 
+<div class="content" style="margin: 20px; background-color: #f8f9fa; border-radius: 15px; box-shadow: 0 0 20px rgba(0,0,0,0.1);">
+      <div class="header-section" style="background-color: #0275d8; padding: 2em; border-radius: 15px 15px 0 0;">
+          <h1 style="font-family: 'Arial', sans-serif; color: white; font-size: 2.5em; font-weight: 600; text-shadow: 2px 2px 4px rgba(0,0,0,0.2); text-align: center;">Rumah Sakit di Bekasi Utara</h1>
+          <p style="text-align: center; color: white;">klik marker untuk melihat detail rumah sakit</p>
+      </div>
+      <div id="map" class="map"></div>
+      <div class="data main-content">
+          <div class="download-section">
+              <a href="<?=base_url()?>assets/hospital.geojson" download="hospital.geojson">
+                  <button class="btn btn-success btn-lg"><i class="fas fa-download"></i> Download GeoJSON</button>
+              </a>
+          </div>
+          <div class="table-responsive">
+              <table id="data-container" class="table table-hover table-bordered">
+              </table>
+          </div>
+      </div>
+</div>
 
-<script> 
+<script>
       var hospital = new L.layerGroup();
       $.getJSON("<?=base_url()?>assets/hospital.geojson", function(data) {
           var ratIcon = L.icon({
@@ -24,12 +36,11 @@
                               <img src="${feature.properties.image}" style="width: 80%; height:100px; margin-bottom: 8px;">
                           </div>
                           <div class="button-container">
-                                                <a href="${feature.properties.web}" style="text-decoration: none;">
-                                                    <button class="btn button" style="margin-right: 5px;">Website</button>
-                                                </a>
-                                                <a href="${feature.properties.route}" target="__blank">
-                                                    <button class="btn button" style="margin-right: 5px;">Route</button>
-                                                </a>
+                              <a href="${feature.properties.web}" class=""><button class="btn btn-primary btn-sm"><i class="fas fa-globe"></i>
+                              Website
+                              
+                              </button> </a>
+                              <a href="${feature.properties.route}" class="btn btn-warning btn-sm"><i class="fas fa-route"></i> Rute</a>
                           </div>
                       </div>
                   `, {
@@ -41,13 +52,25 @@
           }).addTo(hospital);
         
           var map = L.map('map', {
-              center: [-6.1951102, 107.0118729], 
-              zoom: 12, 
+              center: [-6.1951102, 107.0118729],
+              zoom: 12,
               zoomControl: false,
               layers: [hospital],
               fadeAnimation: true,
               zoomAnimation: true
-          }); 
+          });
+
+          var polygon = L.polygon([
+              [-6.1651102, 106.9818729],
+              [-6.1651102, 107.0418729],
+              [-6.2251102, 107.0418729],
+              [-6.2251102, 106.9818729],
+          ], {
+              color: '#3498db',
+              fillColor: '#3498db',
+              fillOpacity: 0.2,
+              weight: 2
+          }).addTo(map);
 
           var GoogleMaps = L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
               maxZoom: 22,
@@ -55,10 +78,10 @@
               attribution: 'Latihan Web GIS'
           }).addTo(map);
         
-          var GoogleSatelliteHybrid = L.tileLayer('https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', { 
-              maxZoom: 22, 
-              attribution: 'Latihan Web SIG' 
-          }); 
+          var GoogleSatelliteHybrid = L.tileLayer('https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', {
+              maxZoom: 22,
+              attribution: 'Latihan Web SIG'
+          });
 
           var Esri_NatGeoWorldMap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}', {
               attribution: 'Tiles © Esri — National Geographic, Esri, DeLorme, NAVTEQ, UNEP-WCMC, USGS, NASA, ESA, METI, NRCAN, GEBCO, NOAA, iPC',
@@ -93,9 +116,9 @@
           });
 
           var miniMap = new L.Control.MiniMap(miniMapTile, {
-              toggleDisplay: true, 
+              toggleDisplay: true,
               position: "bottomright",
-              aimingRectOptions: {color: "#ff1100", weight: 3}, 
+              aimingRectOptions: {color: "#ff1100", weight: 3},
               shadowRectOptions: {color: "#0000AA", weight: 1, opacity: 0, fillOpacity: 0}
           }).addTo(map);
         
@@ -153,51 +176,104 @@
           window.addEventListener('resize', function() {
               map.invalidateSize();
           });
+
+          // Add table data
+          const container = document.getElementById("data-container");
+          container.innerHTML = `
+          <thead class="table-primary">
+              <tr>
+                  <th>Nama</th>
+                  <th>Alamat</th>
+                  <th>Latitude</th>
+                  <th>Longitude</th>
+                  <th>Gambar</th>
+                  <th>Website</th>
+                  <th>Rute</th>
+              </tr>
+          </thead>
+          `;
+
+          data.features.forEach(feature => {
+              const row = document.createElement("tr");
+              row.innerHTML = `
+                  <td class="align-middle">${feature.properties.name}</td>
+                  <td class="align-middle">${feature.properties.address}</td>
+                  <td class="align-middle">${feature.geometry.coordinates[1]}</td>
+                  <td class="align-middle">${feature.geometry.coordinates[0]}</td>
+                  <td class="align-middle"><img src="${feature.properties.image}" class="img-thumbnail"></td>
+                  <td class="align-middle"><a href="${feature.properties.web}" class="btn btn-primary btn-sm"><i class="fas fa-globe"></i> Website</a></td>
+                  <td class="align-middle"><a href="${feature.properties.route}" class="btn btn-warning btn-sm"><i class="fas fa-route"></i> Rute</a></td>
+              `;
+              container.appendChild(row);
+          });
       })
 </script>
 
 <style>
-      a{
-            text-decoration: none;
-            
-      }
-      .button-container {
+      .data {
           display: flex;
-          flex-direction: row;
+          flex-direction: column;
           gap: 2em;
-          justify-content: center;
-          align-items: center;
-          margin-top: 20px;
-      }
-      .button {
-            height: 3em;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 8em;
-            background-color: white;
-           
-            border: 1px solid #ccc;
-            border-color: blue;
-            border-radius: 6px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            cursor: pointer;
-            padding: 0 1.5em;
+          margin: 20px;
       }
 
-      .button:hover {
-            background-color: blue;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-            color:white;
-      }      .map {
-          width: 90%;
+      img {
+          width: 150px;
+          height: 80px;
+          object-fit: cover;
+          border-radius: 8px;
+          transition: transform 0.3s ease;
+      }
+
+      img:hover {
+          transform: scale(1.1);
+      }
+
+      a {
+          text-decoration: none;
+      }
+
+      .download-section {
+          margin: 2em 0;
+          text-align: center;
+      }
+
+      .main-content {
+          margin: 20px;
+          padding: 2em;
+          background-color: white;
+          border-radius: 10px;
+          box-shadow: 0 0 10px rgba(0,0,0,0.05);
+      }
+
+      .table {
+          background-color: white;
+      }
+
+      .table th {
+          background-color: #0275d8;
+          color: white;
+          font-weight: 600;
+      }
+
+      .table td {
+          vertical-align: middle;
+      }
+
+      .btn {
+          transition: transform 0.2s ease;
+      }
+
+      .btn:hover {
+          transform: translateY(-2px);
+      }
+
+      .map {
+          width: 100%;
           margin: auto;
           top: 20px;
           bottom: 80px;
-          height: 60vh;
+          height: 80vh;
           min-height: 500px;
           border-radius: 10px;
           box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -219,9 +295,19 @@
           backdrop-filter: blur(5px);
       }
 
-      .leaflet-touch .leaflet-control-layers, 
+      .leaflet-touch .leaflet-control-layers,
       .leaflet-touch .leaflet-bar {
           border: none;
           box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      }
+
+      @media screen and (max-width: 768px) {
+          .main-content {
+              padding: 1em;
+          }
+
+          .table-responsive {
+              overflow-x: auto;
+          }
       }
 </style>
