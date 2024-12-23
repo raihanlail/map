@@ -19,6 +19,7 @@
 
 <script>
       var hospital = new L.layerGroup();
+      var kota = L.layerGroup();
       $.getJSON("<?=base_url()?>assets/hospital.geojson", function(data) {
           var ratIcon = L.icon({
               iconUrl: '<?=base_url()?>assets/marker.png',
@@ -40,7 +41,7 @@
                               Website
                               
                               </button> </a>
-                              <a href="${feature.properties.route}" class="btn btn-warning btn-sm"><i class="fas fa-route"></i> Rute</a>
+                              <a href="${feature.properties.route}" class=""><button class="btn btn-warning btn-sm"><i class="fas fa-route"></i> Rute</button></a>
                           </div>
                       </div>
                   `, {
@@ -50,6 +51,22 @@
                   return marker;
               }
           }).addTo(hospital);
+
+                $.getJSON("<?=base_url()?>/assets/bekasi3.geojson", function(kode) {
+                    L.geoJson(kode, {
+                        style: function(feature) {
+                            return {
+                                color: "#3498db",
+                                weight: 4,
+                                fillColor: "#3498db",
+                                fillOpacity: 0.5
+                            };
+                        },
+                        onEachFeature: function(feature, layer) {
+                            layer.bindPopup(feature.properties.NAMOBJ)
+                        }
+                    }).addTo(kota);
+                }); 
         
           var map = L.map('map', {
               center: [-6.1951102, 107.0118729],
@@ -60,17 +77,7 @@
               zoomAnimation: true
           });
 
-          var polygon = L.polygon([
-              [-6.1651102, 106.9818729],
-              [-6.1651102, 107.0418729],
-              [-6.2251102, 107.0418729],
-              [-6.2251102, 106.9818729],
-          ], {
-              color: '#3498db',
-              fillColor: '#3498db',
-              fillOpacity: 0.2,
-              weight: 2
-          }).addTo(map);
+          
 
           var GoogleMaps = L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
               maxZoom: 22,
@@ -103,7 +110,10 @@
 
           var groupedOverlays = {
               "Peta Dasar": {
-                  'Rumah Sakit': hospital
+                  "BWP Bekasi Utara": kota
+              },
+              "Peta Khusus":{
+                'Rumah Sakit': hospital
               }
           };
             

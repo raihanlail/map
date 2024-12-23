@@ -1,6 +1,7 @@
 <div class="content" style="margin: 20px; background-color: #f8f9fa; border-radius: 15px; box-shadow: 0 0 20px rgba(0,0,0,0.1);"> 
     <div class="header-section" style="background-color: #0275d8; padding: 2em; border-radius: 15px 15px 0 0;">
         <h1 style="font-family: 'Arial', sans-serif; color: white; font-size: 2.5em; font-weight: 600; text-shadow: 2px 2px 4px rgba(0,0,0,0.2); text-align: center;">Data Details</h1>
+        <p style="text-align: center; color: white;">Menampilkan data rumah sakit di Bekasi Utara secara lengkap</p>
     </div>
     
     <div id="map" class="map"></div> 
@@ -9,6 +10,9 @@
         <div class="download-section">
             <a href="<?=base_url()?>assets/hospital.geojson" download="hospital.geojson">
                 <button class="btn btn-success btn-lg"><i class="fas fa-download"></i> Download GeoJSON</button>
+            </a>
+            <a href="<?=base_url()?>assets/hospital.geojson" download="~$hospital.xlsx">
+                <button class="btn btn-success btn-lg"><i class="fas fa-download"></i> Download Excel</button>
             </a>
         </div>
         <div class="table-responsive">
@@ -81,16 +85,22 @@
     }
 
     .download-section {
+        display: flex;
+        flex-direction: row;
+        gap:2em;
+        align-items: center;
         margin: 2em 0;
         text-align: center;
     }
 
     .main-content {
-        margin: 20px;
+        margin: 5px;
         padding: 2em;
         background-color: white;
         border-radius: 10px;
         box-shadow: 0 0 10px rgba(0,0,0,0.05);
+        display: flex;
+        align-items: center;
     }
 
     .table {

@@ -1,5 +1,5 @@
 </div>
-<footer class="main-footer" style="margin-top: 50px;">
+<footer class="main-footer footer" style="margin-top: 50px;">
     <!-- To the right -->
     <div class="float-right d-none d-sm-inline">
       

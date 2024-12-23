@@ -9,20 +9,27 @@
 .section-1{
     display:flex;
     flex-direction: column;
-    width: 50%;
-    margin-top: 4em;
-    margin-left:4em;
+    width: 70%;
+    margin-top: 6em;
+    margin-left:6em;
     gap:2em;
 }
 
 .section-2{
-    width: 50%;
+    display: flex;
+    
+    width: 30%;
     margin-top: 4em;
     margin-left:4em;
 }
 
 .button{
     height:60px;
+}
+
+.footer{
+    background-color: #0275d8;
+    color: white;
 }
 
 @media only screen and (max-width: 768px) {
@@ -32,6 +39,7 @@
     margin-left:2em;
     }
     .section-2{
+    
         width:90%;
         margin-top: 2em;
     margin-left:2em;
@@ -39,5 +47,6 @@
     .jumbotron{
         display:flex;
         flex-direction:column;
+        height: 180vh;
     }
 }
